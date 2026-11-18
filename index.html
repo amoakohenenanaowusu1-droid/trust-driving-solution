@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Trust Driving Solution | DVLA Approved Driving School</title>
+  <meta name="description" content="Trust Driving Solution - DVLA approved driving school. Book regular, express, expresso or refresher lessons online." />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            trust: {
+              50: '#eff6ff',
+              100: '#dbeafe',
+              200: '#bfdbfe',
+              300: '#93c5fd',
+              400: '#60a5fa',
+              500: '#3b82f6',
+              600: '#2563eb',
+              700: '#1d4ed8',
+              800: '#1e40af',
+              900: '#1e3a8a',
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+    body { font-family: 'Inter', system-ui, sans-serif; }
+    .slot-available { transition: all 0.15s ease; }
+    .slot-available:hover { transform: translateY(-1px); }
+    .calendar-day { min-height: 100px; }
+    .nav-link.active { color: #2563eb; border-bottom: 2px solid #2563eb; }
+    .toast {
+      animation: slideIn 0.3s ease;
+    }
+    @keyframes slideIn {
+      from { transform: translateX(100%); opacity: 0; }
+      to { transform: translateX(0); opacity: 1; }
+    }
+  </style>
+</head>
+<body class="bg-slate-50 text-slate-800">
+  <!-- Toast notifications -->
+  <div id="toast-container" class="fixed top-4 right-4 z-50 space-y-2"></div>
+
+  <!-- Header -->
+  <header class="bg-white border-b border-slate-200 sticky top-0 z-40 shadow-sm">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-16">
+        <div class="flex items-center gap-3 cursor-pointer" onclick="showSection('home')">
+          <div class="w-10 h-10 bg-trust-600 rounded-lg flex items-center justify-center">
+            <i class="fas fa-car text-white text-lg"></i>
+          </div>
+          <div>
+            <h1 class="text-xl font-bold text-slate-900 leading-tight">Trust Driving Solution</h1>
+            <p class="text-xs text-slate-500">DVLA Approved Driving School</p>
+          </div>
+        </div>
+        <nav class="hidden md:flex items-center gap-1">
+          <button onclick="showSection('home')" data-section="home" class="nav-link px-4 py-2 text-sm font-medium text-slate-600 hover:text-trust-600 transition">Home</button>
+          <button onclick="showSection('book')" data-section="book" class="nav-link px-4 py-2 text-sm font-medium text-slate-600 hover:text-trust-600 transition">Book a Lesson</button>
+          <button onclick="showSection('schedule')" data-section="schedule" class="nav-link px-4 py-2 text-sm font-medium text-slate-600 hover:text-trust-600 transition">My Schedule</button>
+          <button onclick="showSection('admin')" data-section="admin" class="nav-link px-4 py-2 text-sm font-medium text-slate-600 hover:text-trust-600 transition">Instructor Panel</button>
+        </nav>
+        <button id="mobile-menu-btn" class="md:hidden p-2 rounded-lg hover:bg-slate-100">
+          <i class="fas fa-bars text-slate-600"></i>
+        </button>
+      </div>
+    </div>
+    <!-- Mobile menu -->
+    <div id="mobile-menu" class="hidden md:hidden border-t border-slate-200 bg-white">
+      <div class="px-4 py-3 space-y-1">
+        <button onclick="showSection('home'); toggleMobileMenu()" class="block w-full text-left px-3 py-2 rounded-lg text-sm font-medium text-slate-700 hover:bg-slate-100">Home</button>
+        <button onclick="showSection('book'); toggleMobileMenu()" class="block w-full text-left px-3 py-2 rounded-lg text-sm font-medium text-slate-700 hover:bg-slate-100">Book a Lesson</button>
+        <button onclick="showSection('schedule'); toggleMobileMenu()" class="block w-full text-left px-3 py-2 rounded-lg text-sm font-medium text-slate-700 hover:bg-slate-100">My Schedule</button>
+        <button onclick="showSection('admin'); toggleMobileMenu()" class="block w-full text-left px-3 py-2 rounded-lg text-sm font-medium text-slate-700 hover:bg-slate-100">Instructor Panel</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="min-h-[calc(100vh-8rem)]">
+    <!-- HOME SECTION -->
+    <section id="section-home" class="section">
+      <!-- Hero -->
+      <div class="bg-gradient-to-br from-trust-700 via-trust-600 to-trust-800 text-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-16">
+          <div class="grid md:grid-cols-2 gap-10 items-center">
+            <div>
+              <span class="inline-block px-3 py-1 bg-white/20 rounded-full text-sm font-medium mb-4">DVLA Approved Driving School</span>
+              <h2 class="text-4xl md:text-5xl font-extrabold leading-tight mb-4">Trust Driving Solution</h2>
+              <p class="text-lg text-trust-100 mb-6">Professional driving lessons with flexible schedules. Regular, Express, Expresso &amp; Refresher courses available. Book your next lesson online in under a minute.</p>
+              <div class="flex flex-wrap gap-3">
+                <button onclick="showSection('book')" class="px-6 py-3 bg-white text-trust-700 font-semibold rounded-lg shadow hover:bg-trust-50 transition">
+                  <i class="fas fa-calendar-check mr-2"></i>Book a Lesson
+                </button>
+                <button onclick="showSection('schedule')" class="px-6 py-3 bg-trust-500/40 border border-white/30 text-white font-semibold rounded-lg hover:bg-trust-500/60 transition">
+                  View My Schedule
+                </button>
+              </div>
+              <div class="mt-6 bg-white/10 backdrop-blur rounded-xl p-4 border border-white/20">
+                <p class="text-sm font-medium mb-2">Next available slots</p>
+                <div id="hero-slots" class="space-y-1.5 text-sm">
+                  <!-- Populated by JS -->
+                </div>
+              </div>
+            </div>
+            <div class="flex justify-center">
+              <img src="promo-flyer.webp" alt="Trust Driving Solution - DVLA Approved Driving School" class="rounded-2xl shadow-2xl max-w-full h-auto border-4 border-white/20" />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Features -->
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+        <div class="text-center mb-12">
+          <h3 class="text-3xl font-bold text-slate-900 mb-3">Why choose Trust Driving Solution?</h3>
+          <p class="text-slate-600 max-w-2xl mx-auto">Everything you need to pass your test and become a safe, confident driver.</p>
+        </div>
+        <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div class="bg-white rounded-xl p-6 shadow-sm border border-slate-100 hover:shadow-md transition">
+            <div class="w-12 h-12 bg-trust-100 rounded-lg flex items-center justify-center mb-4">
+              <i class="fas fa-user-check text-trust-600 text-xl"></i>
+            </div>
+            <h4 class="font-semibold text-lg mb-2">Qualified Instructors</h4>
+            <p class="text-slate-600 text-sm">All instructors are fully licensed, DBS checked, and patient teachers.</p>
+          </div>
+          <div class="bg-white rounded-xl p-6 shadow-sm border border-slate-100 hover:shadow-md transition">
+            <div class="w-12 h-12 bg-emerald-100 rounded-lg flex items-center justify-center mb-4">
+              <i class="fas fa-calendar-alt text-emerald-600 text-xl"></i>
+            </div>
+            <h4 class="font-semibold text-lg mb-2">Flexible Scheduling</h4>
+            <p class="text-slate-600 text-sm">Book, reschedule or cancel online 24/7. Choose times that fit your life.</p>
+          </div>
+          <div class="bg-white rounded-xl p-6 shadow-sm border border-slate-100 hover:shadow-md transition">
+            <div class="w-12 h-12 bg-amber-100 rounded-lg flex items-center justify-center mb-4">
+              <i class="fas fa-car text-amber-600 text-xl"></i>
+            </div>
+            <h4 class="font-semibold text-lg mb-2">Modern Vehicles</h4>
+            <p class="text-slate-600 text-sm">Dual-control cars in both manual and automatic. Clean and well maintained.</p>
+          </div>
+          <div class="bg-white rounded-xl p-6 shadow-sm border border-slate-100 hover:shadow-md transition">
+            <div class="w-12 h-12 bg-violet-100 rounded-lg flex items-center justify-center mb-4">
+              <i class="fas fa-graduation-cap text-violet-600 text-xl"></i>
+            </div>
+            <h4 class="font-semibold text-lg mb-2">High Pass Rate</h4>
+            <p class="text-slate-600 text-sm">Structured lessons and test-ready preparation that get results.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Lesson Types -->
+      <div class="bg-white border-y border-slate-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+          <div class="text-center mb-10">
+            <h3 class="text-3xl font-bold text-slate-900 mb-3">Our Lessons</h3>
+            <p class="text-slate-600">Choose the right lesson type for your goals.</p>
+          </div>
+          <div class="grid md:grid-cols-3 gap-6" id="lesson-types-grid">
+            <!-- Populated by JS -->
+          </div>
+        </div>
+      </div>
+
+      <!-- Instructors -->
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+        <div class="text-center mb-10">
+          <h3 class="text-3xl font-bold text-slate-900 mb-3">Meet Our Instructors</h3>
+          <p class="text-slate-600">Experienced, friendly, and dedicated to your success.</p>
+        </div>
+        <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6" id="instructors-grid">
+          <!-- Populated by JS -->
+        </div>
+      </div>
+
+      <!-- Road Safety -->
+      <div class="bg-slate-100 border-y border-slate-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+          <div class="text-center mb-10">
+            <h3 class="text-3xl font-bold text-slate-900 mb-3">Road Safety First</h3>
+            <p class="text-slate-600 max-w-2xl mx-auto">We train every student to understand traffic signals, road signs and safe driving habits.</p>
+          </div>
+          <div class="flex justify-center">
+            <img src="safety-poster.webp" alt="Road safety poster - Traffic light signals and prohibitory signs" class="rounded-xl shadow-lg max-w-full md:max-w-2xl h-auto border border-slate-200" />
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- BOOK SECTION -->
+    <section id="section-book" class="section hidden">
+      <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+        <div class="mb-8">
+          <h2 class="text-3xl font-bold text-slate-900 mb-2">Book a Driving Lesson</h2>
+          <p class="text-slate-600">Select your lesson type, instructor, date and time. Confirmation is instant.</p>
+        </div>
+
+        <div class="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
+          <!-- Step indicator -->
+          <div class="bg-slate-50 px-6 py-4 border-b border-slate-200">
+            <div class="flex items-center justify-between text-sm">
+              <div class="flex items-center gap-2">
+                <span id="step-1-badge" class="w-7 h-7 rounded-full bg-trust-600 text-white flex items-center justify-center font-semibold text-xs">1</span>
+                <span class="font-medium text-slate-700">Lesson & Instructor</span>
+              </div>
+              <div class="h-px flex-1 mx-4 bg-slate-200"></div>
+              <div class="flex items-center gap-2">
+                <span id="step-2-badge" class="w-7 h-7 rounded-full bg-slate-200 text-slate-500 flex items-center justify-center font-semibold text-xs">2</span>
+                <span class="font-medium text-slate-500">Date & Time</span>
+              </div>
+              <div class="h-px flex-1 mx-4 bg-slate-200"></div>
+              <div class="flex items-center gap-2">
+                <span id="step-3-badge" class="w-7 h-7 rounded-full bg-slate-200 text-slate-500 flex items-center justify-center font-semibold text-xs">3</span>
+                <span class="font-medium text-slate-500">Your Details</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="p-6">
+            <!-- Step 1 -->
+            <div id="book-step-1">
+              <div class="mb-6">
+                <label class="block text-sm font-medium text-slate-700 mb-2">Lesson Type</label>
+                <div class="grid sm:grid-cols-2 gap-3" id="book-lesson-types">
+                  <!-- Populated by JS -->
+                </div>
+              </div>
+              <div class="mb-6">
+                <label class="block text-sm font-medium text-slate-700 mb-2">Preferred Instructor</label>
+                <select id="book-instructor" class="w-full px-4 py-2.5 border border-slate-300 rounded-lg focus:ring-2 focus:ring-trust-500 focus:border-trust-500 outline-none">
+                  <option value="any">Any available instructor</option>
+                </select>
+              </div>
+              <div class="flex justify-end">
+                <button onclick="goToBookStep(2)" class="px-6 py-2.5 bg-trust-600 text-white font-medium rounded-lg hover:bg-trust-700 transition">
+                  Next: Choose Date & Time <i class="fas fa-arrow-right ml-2"></i>
+                </button>
+              </div>
+            </div>
+
+            <!-- Step 2 -->
+            <div id="book-step-2" class="hidden">
+              <div class="mb-4 flex items-center justify-between">
+                <button onclick="changeWeek(-1)" class="p-2 rounded-lg hover:bg-slate-100"><i class="fas fa-chevron-left"></i></button>
+                <h3 id="week-label" class="font-semibold text-slate-800"></h3>
+                <button onclick="changeWeek(1)" class="p-2 rounded-lg hover:bg-slate-100"><i class="fas fa-chevron-right"></i></button>
+              </div>
+              <div id="availability-calendar" class="mb-6">
+                <!-- Populated by JS -->
+              </div>
+              <div class="flex justify-between">
+                <button onclick="goToBookStep(1)" class="px-5 py-2.5 border border-slate-300 text-slate-700 font-medium rounded-lg hover:bg-slate-50 transition">
+                  <i class="fas fa-arrow-left mr-2"></i> Back
+                </button>
+                <button onclick="goToBookStep(3)" id="btn-to-step3" disabled class="px-6 py-2.5 bg-trust-600 text-white font-medium rounded-lg hover:bg-trust-700 transition disabled:opacity-40 disabled:cursor-not-allowed">
+                  Next: Your Details <i class="fas fa-arrow-right ml-2"></i>
+                </button>
+              </div>
+            </div>
+
+            <!-- Step 3 -->
+            <div id="book-step-3" class="hidden">
+              <div class="bg-trust-50 border border-trust-100 rounded-lg p-4 mb-6 text-sm">
+                <p class="font-medium text-trust-800 mb-1">Selected lesson</p>
+                <p id="booking-summary" class="text-trust-700"></p>
+              </div>
+              <div class="grid sm:grid-cols-2 gap-4 mb-6">
+                <div>
+                  <label class="block text-sm font-medium text-slate-700 mb-1">Full Name *</label>
+                  <input type="text" id="student-name" class="w-full px-4 py-2.5 border border-slate-300 rounded-lg focus:ring-2 focus:ring-trust-500 focus:border-trust-500 outline-none" placeholder="Jane Smith" />
+                </div>
+                <div>
+                  <label class="block text-sm font-medium text-slate-700 mb-1">Email *</label>
+                  <input type="email" id="student-email" class="w-full px-4 py-2.5 border border-slate-300 rounded-lg focus:ring-2 focus:ring-trust-500 focus:border-trust-500 outline-none" placeholder="jane@example.com" />
+                </div>
+                <div>
+                  <label class="block text-sm font-medium text-slate-700 mb-1">Phone *</label>
+                  <input type="tel" id="student-phone" class="w-full px-4 py-2.5 border border-slate-300 rounded-lg focus:ring-2 focus:ring-trust-500 focus:border-trust-500 outline-none" placeholder="07123 456789" />
+                </div>
+                <div>
+                  <label class="block text-sm font-medium text-slate-700 mb-1">Pickup Location (optional)</label>
+                  <input type="text" id="student-pickup" class="w-full px-4 py-2.5 border border-slate-300 rounded-lg focus:ring-2 focus:ring-trust-500 focus:border-trust-500 outline-none" placeholder="Home address or postcode" />
+                </div>
+              </div>
+              <div class="mb-6">
+                <label class="block text-sm font-medium text-slate-700 mb-1">Notes for instructor (optional)</label>
+                <textarea id="student-notes" rows="2" class="w-full px-4 py-2.5 border border-slate-300 rounded-lg focus:ring-2 focus:ring-trust-500 focus:border-trust-500 outline-none" placeholder="e.g. Focus on parallel parking"></textarea>
+              </div>
+              <div class="flex justify-between">
+                <button onclick="goToBookStep(2)" class="px-5 py-2.5 border border-slate-300 text-slate-700 font-medium rounded-lg hover:bg-slate-50 transition">
+                  <i class="fas fa-arrow-left mr-2"></i> Back
+                </button>
+                <button onclick="confirmBooking()" class="px-6 py-2.5 bg-emerald-600 text-white font-medium rounded-lg hover:bg-emerald-700 transition">
+                  <i class="fas fa-check mr-2"></i> Confirm Booking
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- MY SCHEDULE SECTION -->
+    <section id="section-schedule" class="section hidden">
+      <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+        <div class="mb-8 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+          <div>
+            <h2 class="text-3xl font-bold text-slate-900 mb-1">My Schedule</h2>
+            <p class="text-slate-600">View and manage your upcoming driving lessons.</p>
+          </div>
+          <button onclick="showSection('book')" class="px-5 py-2.5 bg-trust-600 text-white font-medium rounded-lg hover:bg-trust-700 transition self-start">
+            <i class="fas fa-plus mr-2"></i>Book New Lesson
+          </button>
+        </div>
+
+        <div class="mb-4">
+          <input type="email" id="lookup-email" placeholder="Enter the email you used to book..." class="w-full sm:w-96 px-4 py-2.5 border border-slate-300 rounded-lg focus:ring-2 focus:ring-trust-500 focus:border-trust-500 outline-none" />
+          <button onclick="loadMyBookings()" class="mt-2 sm:mt-0 sm:ml-2 px-5 py-2.5 bg-slate-800 text-white font-medium rounded-lg hover:bg-slate-900 transition">
+            Find My Lessons
+          </button>
+        </div>
+
+        <div id="my-bookings-list" class="space-y-4">
+          <div class="text-center py-12 text-slate-500">
+            <i class="fas fa-calendar text-4xl mb-3 opacity-40"></i>
+            <p>Enter your email above to see your bookings.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ADMIN / INSTRUCTOR PANEL -->
+    <section id="section-admin" class="section hidden">
+      <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+        <div class="mb-8">
+          <h2 class="text-3xl font-bold text-slate-900 mb-1">Instructor Panel</h2>
+          <p class="text-slate-600">Manage availability and view all scheduled lessons. (Demo – no real login required)</p>
+        </div>
+
+        <div class="grid lg:grid-cols-3 gap-6">
+          <!-- Left: Set Availability -->
+          <div class="lg:col-span-1 space-y-6">
+            <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-5">
+              <h3 class="font-semibold text-lg mb-4 flex items-center gap-2">
+                <i class="fas fa-clock text-trust-600"></i> Set Availability
+              </h3>
+              <div class="space-y-3">
+                <div>
+                  <label class="block text-sm font-medium text-slate-700 mb-1">Instructor</label>
+                  <select id="admin-instructor" class="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm focus:ring-2 focus:ring-trust-500 outline-none"></select>
+                </div>
+                <div>
+                  <label class="block text-sm font-medium text-slate-700 mb-1">Date</label>
+                  <input type="date" id="admin-date" class="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm focus:ring-2 focus:ring-trust-500 outline-none" />
+                </div>
+                <div class="grid grid-cols-2 gap-2">
+                  <div>
+                    <label class="block text-sm font-medium text-slate-700 mb-1">From</label>
+                    <select id="admin-start" class="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm focus:ring-2 focus:ring-trust-500 outline-none"></select>
+                  </div>
+                  <div>
+                    <label class="block text-sm font-medium text-slate-700 mb-1">To</label>
+                    <select id="admin-end" class="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm focus:ring-2 focus:ring-trust-500 outline-none"></select>
+                  </div>
+                </div>
+                <button onclick="addAvailability()" class="w-full py-2.5 bg-trust-600 text-white font-medium rounded-lg hover:bg-trust-700 transition text-sm">
+                  <i class="fas fa-plus mr-1"></i> Add Time Slots
+                </button>
+              </div>
+            </div>
+
+            <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-5">
+              <h3 class="font-semibold text-lg mb-3 flex items-center gap-2">
+                <i class="fas fa-info-circle text-slate-500"></i> Quick Tips
+              </h3>
+              <ul class="text-sm text-slate-600 space-y-2">
+                <li class="flex gap-2"><i class="fas fa-check text-emerald-500 mt-0.5"></i> Add blocks of available hours – the system creates 1-hour slots.</li>
+                <li class="flex gap-2"><i class="fas fa-check text-emerald-500 mt-0.5"></i> Students only see open slots that have no booking.</li>
+                <li class="flex gap-2"><i class="fas fa-check text-emerald-500 mt-0.5"></i> Cancelled lessons free the slot automatically.</li>
+              </ul>
+            </div>
+          </div>
+
+          <!-- Right: All Bookings + Availability overview -->
+          <div class="lg:col-span-2 space-y-6">
+            <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-5">
+              <div class="flex items-center justify-between mb-4">
+                <h3 class="font-semibold text-lg flex items-center gap-2">
+                  <i class="fas fa-list text-trust-600"></i> All Upcoming Lessons
+                </h3>
+                <button onclick="renderAdminBookings()" class="text-sm text-trust-600 hover:text-trust-700 font-medium">
+                  <i class="fas fa-sync-alt mr-1"></i> Refresh
+                </button>
+              </div>
+              <div id="admin-bookings" class="space-y-3 max-h-96 overflow-y-auto">
+                <!-- Populated by JS -->
+              </div>
+            </div>
+
+            <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-5">
+              <h3 class="font-semibold text-lg mb-4 flex items-center gap-2">
+                <i class="fas fa-calendar-week text-trust-600"></i> Open Availability (next 14 days)
+              </h3>
+              <div id="admin-availability" class="space-y-2 max-h-64 overflow-y-auto text-sm">
+                <!-- Populated by JS -->
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="bg-slate-900 text-slate-300 mt-auto">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+      <div class="grid md:grid-cols-3 gap-8">
+        <div>
+          <div class="flex items-center gap-2 mb-3">
+            <div class="w-8 h-8 bg-trust-600 rounded-lg flex items-center justify-center">
+              <i class="fas fa-car text-white text-sm"></i>
+            </div>
+            <span class="font-bold text-white">Trust Driving Solution</span>
+          </div>
+          <p class="text-sm text-slate-400">Helping new drivers become safe, confident road users since 2012.</p>
+        </div>
+        <div>
+          <h4 class="font-semibold text-white mb-3">Contact</h4>
+          <ul class="text-sm space-y-2 text-slate-400">
+            <li><i class="fas fa-phone mr-2 text-trust-400"></i> 01234 567890</li>
+            <li><i class="fas fa-envelope mr-2 text-trust-400"></i> amoakohenenanaowusu1@gmail.com</li>
+            <li><i class="fas fa-map-marker-alt mr-2 text-trust-400"></i> 42 High Street, Yourtown</li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="font-semibold text-white mb-3">Hours</h4>
+          <ul class="text-sm space-y-1 text-slate-400">
+            <li>Mon – Fri: 8:00 – 20:00</li>
+            <li>Saturday: 9:00 – 17:00</li>
+            <li>Sunday: Closed</li>
+          </ul>
+        </div>
+      </div>
+      <div class="border-t border-slate-800 mt-8 pt-6 text-center text-sm text-slate-500">
+        © 2026 Trust Driving Solution. DVLA Approved Driving School. Demo scheduling system.
+      </div>
+    </div>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
